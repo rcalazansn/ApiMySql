@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  api:
+    image: rcalazansn/apimysql
+    build:
+      context: .
+      dockerfile: .
+    ports:
+      - "1986:80"
+    networks:
+      - minha_rede
+    depends_on:
+      - mysql_db
+    environment: 
+      ConnectionStrings__MySql: "server=mysql_db;database=minha_base;user=meu_usuario;password=minha_senha"
+
+  mysql_db:
+    image: mysql:8.0
+    networks:
+      - minha_rede
+    environment: 
+      MYSQL_DATABASE: dotzfidelidade
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: banana
+      MYSQL_PASSWORD: banana
+
+networks: 
+  minha_rede: 
+    driver: bridge  
